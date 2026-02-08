@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 // Load env vars
 dotenv.config();
 
+
 // Connect to database
 connectDB();
 
@@ -15,6 +16,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 
 // Routes
 app.use('/api/v1/auth', require('./routes/auth'));
@@ -26,7 +28,7 @@ app.use('/api/v1/videos', require('./routes/videos'));
 app.use('/api/v1/search', require('./routes/search'));
 
 // Serve frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../frontend-react/dist')));
 
 // Serve static assets (uploads)
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -39,9 +41,11 @@ app.get('*', (req, res) => {
         // If it looks like an API or static file request but wasn't handled, return 404
         return res.status(404).json({ message: 'Not Found' });
     }
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend-react/dist/index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
+// console.log("pppp",process.env.JWT_SECRET);
+
 
 app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));

@@ -41,6 +41,8 @@ const getNoteById = async (req, res) => {
 // @route   POST /api/v1/notes
 // @access  Private
 const createNote = async (req, res) => {
+    console.log(req.body);
+
     try {
         const { title, content, category, tags } = req.body;
 
@@ -51,6 +53,8 @@ const createNote = async (req, res) => {
             category,
             tags
         });
+
+console.log("I reached createNote");
 
         const createdNote = await note.save();
         res.status(201).json(createdNote);
